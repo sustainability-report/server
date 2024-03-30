@@ -17,9 +17,6 @@ const fileSchema = new Schema (
       email: String,
       image: String
     },
-    members: [{
-      type: String
-    }]
   },
   {
     timestamps: true

@@ -22,8 +22,6 @@ router.post("/files", ClerkExpressWithAuth(), fileUploader.single("file"), async
     }
     const pushNewFileIntoDB = await FileModel.create(newFile);
     res.json(pushNewFileIntoDB);
-    
-    console.log(pushNewFileIntoDB)
 
   } catch {
     e => {
@@ -81,10 +79,11 @@ router.get("/files/:fileId", async (req, res, next) => {
 
 });
 
-router.put("/files/:fileId", ClerkExpressWithAuth(), fileUploader.single("file"), async (req, res, next) => {
-  const {fileId} = req.params
+router.delete("/files/:fileId", async (req, res, next) => {
+  const { fileId }= req.params;
 
-
+  const deleteFileId = await FileModel.findByIdAndDelete(fileId)
+  res.json({message: "You have successfully deleted file id", deleteFileId})
 })
 
 module.exports = router;

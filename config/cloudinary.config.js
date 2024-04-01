@@ -11,21 +11,20 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: (req, file) => {
-    let folderName = 'gallery'; // Default folder
-    let resourceType = 'auto'; // Let Cloudinary decide based on the file format for images and videos
-
+    let folderName = 'gallery';
+    let resourceType = 'auto';
+    
     if (file.mimetype.startsWith('video/')) {
-      folderName = 'video-gallery'; // A specific folder for videos
+      folderName = 'video-gallery';
     } else if (file.mimetype.startsWith('image/')) {
-      folderName = 'photo-gallery'; // A specific folder for images
+      folderName = 'photo-gallery';
     } else if (file.mimetype === 'application/pdf' || file.mimetype === 'application/msword' || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      folderName = 'documents'; // A specific folder for documents
-      resourceType = 'raw'; // For PDF and Word documents, use 'raw' as they are not images or videos
+      folderName = 'documents';
+      resourceType = 'raw';
     }
 
     return {
       folder: folderName,
-      // Do not use allowed_formats for raw file types as it's not applicable
       resource_type: resourceType,
     };
   },
